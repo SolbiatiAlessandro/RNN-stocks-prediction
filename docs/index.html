@@ -1,6 +1,6 @@
 <head>
-  <script type="text/javascript" src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/libs/dygraph.js"></script>
-  <link rel="stylesheet" src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/libs/dygraph.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.0.0/dygraph.min.js"></script>
+  <link rel="stylesheet" src="//cdnjs.cloudflare.com/ajax/libs/dygraph/2.0.0/dygraph.min.css" />
 </head>
 <body>
 <div style="height:20px;"></div>
@@ -26,7 +26,7 @@
 <div style="height:20px;"></div>
 <div style="width:60%;margin:auto;">
   <h2>Day 1</h2>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg"  />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg" width="200" height="300" />
   <p>This is my work-desk on Day1. So after extensive reading of already existing implementation on the web about RNN to fin markets I am bit disappointed. Most of the time people have no idea what they are speaking about either because they don't know anything about finance or because they don't know anything about the foundation of Deep Learning (or both). On the other hand, what excites me most is that there are plenty of papers about people claiming to predict stock prices with accuracy from 65% to 80%, that is impressive. So my guideline is to try to implement those RNN models in my application, and apply the prediction to some financial instruments. Currently I would go for binary options, it seems fitting pretty well with the RNN prediction capabilities. There are two main types of approach to the problem:<p>
   <ul>
     <li><b>(A) Regression problem</b>: the most straightforward, given the last Ndays predict tomorrow closing price.</li>
