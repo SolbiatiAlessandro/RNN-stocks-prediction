@@ -1,1 +1,5 @@
 theme: jekyll-theme-slate
+title: 'RNN-stocks-prediction'
+description: 'Another attempt to apply Deep-Learning to financial market'
+
+show_downloads: "true"
