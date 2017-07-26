@@ -34,7 +34,7 @@
   </ul>
   <p>Full of example of (A) on the internet, and the truth it that they don't work so well. Anyway since they are relatively easy to impelement I gave it a try and here is the outcome.</p>
   <div id="graphdiv3" style="width:500px; height:300px;"></div>
-  <h8>This is graph is the normalized closing price of GOOGL(on a 30periods window), with actual and predicted. I trained the NN with 4 years of prices and 10 epochs.</h8>
+  <p style="font-size:9px">This is graph is the normalized closing price of GOOGL(on a 30periods window), with actual and predicted. I trained the NN with 4 years of prices and 10 epochs.</h8>
   <p>So the graph is showing 'acutal' as the target price and 'predicted' as the price that the NN predicts. How does it work? Is really simple.</p>
   <ul>
     <li>use Pandas to download and create a DataFrame with OHLCV data</li>
@@ -46,7 +46,7 @@
   <p>The full code of this implementation is in the repo <a href="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/regression_v0.1.py">here</a></p>
   <p>So the predictions are really bad, why is that? Of course the NN had not enough training data and the model is quite too simple: the papers suggest to implement at least two stacked LSTM layers with dropout and everything. Regarding the data (now the NN is trained only on GOOGL prices from 2012 to 2016) I should give the NN at least 20/30years of stock prices to acquire some consistency in the predictions. Anyway, this first example was interesting as shows that the NN is actually working an able to detect the trend in stock prices, even if not ready to do any useful prediction right now.</p>
   <div id="graphdiv4" style="width:500px; height:300px;"></div>
-  <h8>Same as above but this time the NN is trained with 16 years of stock prices, the prediction accuracy is improving but still useless. (the prediction price is bounded between [-1,1] for some characteristics of the hyperbolic tangent I used as activation function.</h8>
+  <p style="font-size:9px">Same as above but this time the NN is trained with 16 years of stock prices, what is happening here is that the NN just take yesterday price and change a bit the value with no big difference. Thisresult is actually really bad from a prediction point of view, but is often misjudged as 'excellent' by people using Keras for the first time thinking that the NN is predicting the future: well, is not. Is just copying yesterday price.</h8>
     <p><b>Regression or Classification?</b> I would stop here improving the regression model (A) and spend my energy for the classification model (B). Why is that? In my opinion regression model is not the answer, as the OHLCV data are not enough for this kind of prediction. If we really want to predict the stock price consistently we need some sentiment analysis and other interesting things in our model, furthermore there is the accuracy question: if I am predicting the price I need a really high accuracy to implement it in a trading system or something. On the otherside, the classification problem woulde be extremely useful even if solved with a 60-70% accuracy. Why is that? I am thinking about some trading strategy with binary options. For now suffice it to say that if I am really able to solve the classification problem with something like 68% accuracy I am done: binary options have a break even of 53% and implementing an algo trading on that shouldn't be so difficult. Let's see what's next</p> 
 </div>
 
@@ -65,6 +65,7 @@
     document.getElementById("graphdiv4"),
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/regressionB.csv",
     {
+      dateWindow: [80,120],
       rollPeriod: 1,
       showRoller: true
     }
