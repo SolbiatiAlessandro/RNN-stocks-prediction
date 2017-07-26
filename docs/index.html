@@ -26,7 +26,7 @@
 <div style="height:20px;"></div>
 <div style="width:60%;margin:auto;">
   <h2>Day 1</h2>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg" width="200" height="300" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg" width="500px" />
   <p>This is my work-desk on Day1. So after extensive reading of already existing implementation on the web about RNN to fin markets I am bit disappointed. Most of the time people have no idea what they are speaking about either because they don't know anything about finance or because they don't know anything about the foundation of Deep Learning (or both). On the other hand, what excites me most is that there are plenty of papers about people claiming to predict stock prices with accuracy from 65% to 80%, that is impressive. So my guideline is to try to implement those RNN models in my application, and apply the prediction to some financial instruments. Currently I would go for binary options, it seems fitting pretty well with the RNN prediction capabilities. There are two main types of approach to the problem:<p>
   <ul>
     <li><b>(A) Regression problem</b>: the most straightforward, given the last Ndays predict tomorrow closing price.</li>
@@ -43,6 +43,8 @@
     <li>train the model,used 100 batch_size and 10 epochs</li>
     <li>predict the outcome from X_Test and compare the prediction with actual values</li>
   <p>The full code of this implementation is in the repo <a href="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/regression_v0.1.py">here</a></p>
+  <p>So the predictions are really bad, why is that? Of course the NN had not enough training data and the model is quite too simple: the papers suggest to implement at least two stacked LSTM layers with dropout and everything. Regarding the data (now the NN is trained only on GOOGL prices from 2012 to 2016) I should give the NN at least 20/30years of stock prices to acquire some consistency in the predictions. Anyway, this first example was interesting as shows that the NN is actually working an able to detect the trend in stock prices, even if not ready to do any useful prediction right now.</p>
+    <p><b>Regression or Classification?</b> I would stop here improving the regression model (A) and spend my energy for the classification model (B). Why is that? In my opinion regression model is not the answer, as the OHLCV data are not enough for this kind of prediction. If we really want to predict the stock price consistently we need some sentiment analysis and other interesting things in our model, furthermore there is the accuracy question: if I am predicting the price I need a really high accuracy to implement it in a trading system or something. On the otherside, the classification problem woulde be extremely useful even if solved with a 60-70% accuracy. Why is that? I am thinking about some trading strategy with binary options. For now suffice it to say that if I am really able to solve the classification problem with something like 68% accuracy I am done: binary options have a break even of 53% and implementing an algo trading on that shouldn't be so difficult. Let's see what's next</p> 
 </div>
 
 <p>* this web page is left without proper formatting on purpose </p>
