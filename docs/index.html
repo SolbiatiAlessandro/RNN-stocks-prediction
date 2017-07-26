@@ -26,7 +26,7 @@
 <div style="height:20px;"></div>
 <div style="width:60%;margin:auto;">
   <h2>Day 1</h2>
-  <img src="docs/img/day1.jpg"  alt="郁金香" />
+  <img src="docs/img/day1.jpg"  />
   <p>So after extensive reading of already existing implementation on the web about RNN to fin markets I am bit disappointed. Most of the time people have no idea what they are speaking about either because they don't know anything about finance or because they don't know anything about the foundation of Deep Learning (or both). On the other hand, what excites me most is that there are plenty of papers about people claiming to predict stock prices with accuracy from 65% to 80%, that is impressive. So my guideline is to try to implement those RNN models in my application, and apply the prediction to some financial instruments. Currently I would go for binary options, it seems fitting pretty well with the RNN prediction capabilities. There are two main types of approach to the problem:<p>
   <ul>
     <li><b>(A) Regression problem</b>: the most straightforward, given the last Ndays predict tomorrow closing price.</li>
@@ -34,6 +34,15 @@
   </ul>
   <p>Full of example of (A) on the internet, and the truth it that they don't work so well. Anyway since they are relatively easy to impelement I gave it a try and here is the outcome.</p>
   <div id="graphdiv3" style="width:500px; height:300px;"></div>
+  <p>So the graph is showing 'acutal' as the target price and 'predicted' as the price that the NN predicts. How does it work? Is really simple.</p>
+  <ul>
+    <li>use Pandas to download and create a DataFrame with OHLCV data</li>
+    <li>create the tensor of dimensions (Batch_Size, 30, 5), so 30 time steps and 5 features</li>
+    <li>split train and test data</li>
+    <li>build the RNN model with Keras: I used LSTM + Dropout, a really simple implementation</li>
+    <li>train the model,used 100 batch_size and 10 epochs</li>
+    <li>predict the outcome from X_Test and compare the prediction with actual values</li>
+  <p>The full code of this implementation is in the repo <a href="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/regression_v0.1.py">here</a></p>
 </div>
 
 <p>* this web page is left without proper formatting on purpose </p>
