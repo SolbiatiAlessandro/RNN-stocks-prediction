@@ -43,7 +43,7 @@
     <li>build the RNN model with Keras: I used LSTM + Dropout, a really simple implementation</li>
     <li>train the model,used 100 batch_size and 10 epochs</li>
     <li>predict the outcome from X_Test and compare the prediction with actual values</li>
-  <p>The full code of this implementation is in the repo <a href="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/regression_v0.1.py">here</a></p>
+  <p>The full code of this implementation is in the repo <a href="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/regression.py">regression.py</a></p>
   <p>So the predictions are really bad, why is that? Of course the NN had not enough training data and the model is quite too simple: the papers suggest to implement at least two stacked LSTM layers with dropout and everything. Regarding the data (now the NN is trained only on GOOGL prices from 2012 to 2016) I should give the NN at least 20/30years of stock prices to acquire some consistency in the predictions. Anyway, this first example was interesting as shows that the NN is actually working an able to detect the trend in stock prices, even if not ready to do any useful prediction right now.</p>
   <div id="graphdiv4" style="width:500px; height:300px;"></div>
   <p style="font-size:12px">Same as above but this time the NN is trained with 16 years of stock prices, what is happening here is that the NN just take yesterday price and change a bit the value with no big difference. Thisresult is actually really bad from a prediction point of view, but is often misjudged as 'excellent' by people using Keras for the first time thinking that the NN is predicting the future: well, is not. Is just copying yesterday price.</h8>
