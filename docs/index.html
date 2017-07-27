@@ -8,6 +8,7 @@
 <h1> RNN-stocks-prediction </h1>
 <h3> Another attempt to use Deep-Learning in financial markets*</h3>
 <p><b>project mission</b>: implement some AI systems described in research papers in a full-stack application deployed to the market.</p>
+<p>this is the doc for <a href="https://github.com/SolbiatiAlessandro/RNN-stocks-prediction">RNN-stocks-prediction</a></p>
 <div>
 
 <div style="height:20px;"></div>
@@ -25,7 +26,7 @@
 
 <div style="height:20px;"></div>
 <div style="width:60%;margin:auto;">
-  <h2>Day 1</h2>
+  <h2>Day 1 - kickstarting with regression</h2>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg" width="500px" />
   <p>This is my work-desk on Day1. So after extensive reading of already existing implementation on the web about RNN to fin markets I am bit disappointed. Most of the time people have no idea what they are speaking about either because they don't know anything about finance or because they don't know anything about the foundation of Deep Learning (or both). On the other hand, what excites me most is that there are plenty of papers about people claiming to predict stock prices with accuracy from 65% to 80%, that is impressive. So my guideline is to try to implement those RNN models in my application, and apply the prediction to some financial instruments. Currently I would go for binary options, it seems fitting pretty well with the RNN prediction capabilities. There are two main types of approach to the problem:<p>
   <ul>
@@ -51,7 +52,19 @@
   <div id="graphdiv5"style="width:500px; height:300px;"></div> 
   <p><b>Regression or Classification?</b> I would stop here improving the regression model (A) and spend my energy for the classification model (B). Why is that? In my opinion regression model is not the answer, as the OHLCV data are not enough for this kind of prediction. If we really want to predict the stock price consistently we need some sentiment analysis and other interesting things in our model, furthermore there is the accuracy question: if I am predicting the price I need a really high accuracy to implement it in a trading system or something. On the otherside, the classification problem woulde be extremely useful even if solved with a 60-70% accuracy. Why is that? I am thinking about some trading strategy with binary options. For now suffice it to say that if I am really able to solve the classification problem with something like 68% accuracy I am done: binary options have a break even of 53% and implementing an algo trading on that shouldn't be so difficult. Let's see what's next</p> 
 </div>
-
+<div style="height:20px;"></div>
+<div style="width:60%;margin:auto;">
+  <h2>Day 2 - classification time</h2>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day2.jpg" width="500px" />
+  <p>BIGNEWS: I managed to speak with a PhD in DeepLearning from Tsinghua-Uni and we will have lunch sat, hope he will gives me great insight on what I am doing right/wrong.</p>
+  <p>As I said, today I will focus on classification problem. So how does it work? This is my view up to now.</p>
+  <ul>
+    <li> INPUT - 30-days window <b>normalized log-returns</b>: a log return is defined with a function like this 'ret = lambda x,y: log(y/x)', and the returns must be normalized with a funct like this 'zscore = lambda x:(x -x.mean())/x.std()'. Easy stuff. The not-so-easy stuff here is whether to consider all the returns on OHLCV <b>(option I2)</b> or only the returns on Close prices <b>(option I1)</b>. I will consider and try both options: I2 means considering much more info (5 features in the NN) about the financial asset that could not be so relevant, instead I1 is about just using closing prices (1 feature implementation) that should be more straightforward <i>for humans</i>. I will try both options and see how the NN react. This time we will have an accuracy value to tell us some detailed info about the performance of our dear NN.</li>
+    <li> OUTPUT - <b>label</b> for tomorrow behaviour of (closing)price: also here we have a couple of choice to make, the first choice <b>(option O1)</b> is about a binary classification in the label, i.e. a binary vector [1,0] or [0,1] to show if the price goes up or down. The second choice <b>(option O2)</b> is implementing a multi-class classification, that could be understood as a "discrete mapping" from the continuous log return interval [-INF; +INF] to a discrete interval {-5, -4, .. , 4, 5}. As before, O2 is more difficult to implement and carry out more information, I will have a try with both and see the different outcomes.</li>
+  </ul>
+  <p>Summarizing we have I1 or I2 for the input and O1 or O2 for the output, let's go thourgh the different combinations.</p>
+</div>
+<div style="height:20px;"></div>
 <p>* this web page is left without proper formatting on purpose </p>
   
 <script type="text/javascript">
