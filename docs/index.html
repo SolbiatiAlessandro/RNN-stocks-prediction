@@ -14,7 +14,7 @@
 
 <div style="height:20px;"></div>
 
-<div style="width:60%;margin:auto;">
+<div style="width:90%;margin:auto;">
 <p>Recently I have been playing around with AI and Deep-Learning and I came out with this idea about DL applied to financial markets. Turns out that there are PLENTY of people already doing that out-there, here is a non-comprehensive list:</p>
 <ul>
   <li><a href="https://medium.com/@TalPerry/deep-learning-the-stock-market-df853d139e02">'deep-learning-the-stock-market', Tal Perry</a></li>
@@ -26,7 +26,7 @@
 </div>
 
 <div style="height:20px;"></div>
-<div style="width:60%;margin:auto;">
+<div style="width:90%;margin:auto;">
   <h2>Day 1 - kickstarting with regression</h2>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day1.jpg" width="500px" />
   <p>This is my work-desk on Day1. So after extensive reading of already existing implementation on the web about RNN to fin markets I am bit disappointed. Most of the time people have no idea what they are speaking about either because they don't know anything about finance or because they don't know anything about the foundation of Deep Learning (or both). On the other hand, what excites me most is that there are plenty of papers about people claiming to predict stock prices with accuracy from 65% to 80%, that is impressive. So my guideline is to try to implement those RNN models in my application, and apply the prediction to some financial instruments. Currently I would go for binary options, it seems fitting pretty well with the RNN prediction capabilities. There are two main types of approach to the problem:<p>
@@ -54,7 +54,7 @@
   <p><b>Regression or Classification?</b> I would stop here improving the regression model (A) and spend my energy for the classification model (B). Why is that? In my opinion regression model is not the answer, as the OHLCV data are not enough for this kind of prediction. If we really want to predict the stock price consistently we need some sentiment analysis and other interesting things in our model, furthermore there is the accuracy question: if I am predicting the price I need a really high accuracy to implement it in a trading system or something. On the otherside, the classification problem woulde be extremely useful even if solved with a 60-70% accuracy. Why is that? I am thinking about some trading strategy with binary options. For now suffice it to say that if I am really able to solve the classification problem with something like 68% accuracy I am done: binary options have a break even of 53% and implementing an algo trading on that shouldn't be so difficult. Let's see what's next</p> 
 </div>
 <div style="height:20px;"></div>
-<div style="width:60%;margin:auto;">
+<div style="width:90%;margin:auto;">
   <h2>Day 2 - classification time</h2>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day2.jpg" width="500px" />
   <p>BIGNEWS: I managed to speak with a PhD in DeepLearning from Tsinghua-Uni and we will have lunch sat, hope he will gives me great insight on what I am doing right/wrong.</p>
@@ -79,6 +79,11 @@
   </ul>
   <p>After this long day we got some result: EUREKA. Now will start the long journey to improve the accuracy as high as possible. I will probably spend the next hours playing around with the classification model on different financial instruments to see if I get some golden nugget (FOREX, Volatility and others)</p>
 </div>
+<div style="height:20px;"></div>
+<div style="width:90%;margin:auto;">
+  <h2>Day 3 - A deep unexpected model</h2>
+  <img src="https://github.com/SolbiatiAlessandro/RNN-stocks-prediction/blob/master/docs/img/day3.jpg?raw=true" width="500px" />
+  
 <div style="height:20px;"></div>
   
 <script type="text/javascript">
