@@ -67,6 +67,8 @@
   <p><b>- ATTENTION: IMMINENT BREAKTHROUGH -</b></p>
   <p>So I wrote the Neural Network with I2-O1 configuration and the results were suprisingly good, on the training data of GOOGL stock price from 2000-2016 the NN got a <u>prediction accuracy of 63%</u>. What does it mean? That if you gave the last 30 days OHLCV prices from Yahoo Finance to the Neural Network it will be predict the price of tomorrow with an accuracy of 63% (right 63 times on 100). This is a great news since it mean that the NN is actually working and acquiring some prediction capabilities. Still, the validation accuracy is between 52-54%, so there is a large room for improvement. Here is the training accuracy and validation accuracy for the model.</p>
   <div id="graphdiv6"style="width:500px; height:300px;"></div> 
+  <p>Right now I am pretty positive, since the project is becoming meaningful. I am actually creating something that is able to predict prices consistently and <b>improves</b> during the training. This concept of 'training' the Neural Network really excites me, I mean seeing actually the NN getting better and better at predicting stock prices during the training. To highlight this concept I show you here the 'loss function', that is the difference between the predicted and actual value. As you see, during the training the loss is decreasing more and more (wow!).</p>
+  <div id="graphdiv7"style="width:500px; height:300px;"></div> 
 </div>
 <div style="height:20px;"></div>
   
@@ -76,7 +78,9 @@
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/regressionA.csv",
     {
       rollPeriod: 1,
-      showRoller: true
+      showRoller: true,
+      ylabel: 'stock price (normalized)',
+      xlabel: 'time (days)'
     }
   );
   g4 = new Dygraph(
@@ -85,7 +89,9 @@
     {
       dateWindow: [80,120],
       rollPeriod: 1,
-      showRoller: true
+      showRoller: true,
+      ylabel: 'stock price (normalized)',
+      xlabel: 'time (days)'
     }
   );
     g5 = new Dygraph(
@@ -94,7 +100,9 @@
     {
       dateWindow: [80,120],
       rollPeriod: 1,
-      showRoller: true
+      showRoller: true,
+      ylabel: 'stock price (normalized)',
+      xlabel: 'time (days)'
     }
   );
    g6 = new Dygraph(
@@ -102,7 +110,9 @@
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification_acc.csv",
     {
       rollPeriod: 1,
-      showRoller: true
+      showRoller: true,
+      ylabel: 'accuracy (%)',
+      xlabel: 'training time (epochs)'
     }
   );
    g7 = new Dygraph(
@@ -110,7 +120,9 @@
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification_loss.csv",
     {
       rollPeriod: 1,
-      showRoller: true
+      showRoller: true,
+      ylabel: 'loss (%)',
+      xlabel: 'training time (epochs)'
     }
   );
   
