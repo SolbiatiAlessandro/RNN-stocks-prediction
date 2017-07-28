@@ -7,6 +7,8 @@ here -> https://solbiatialessandro.github.io/RNN-stocks-prediction/
 
 If you wanna run the <b>regression model</b> (implemented with LSTM) just run regression.py
 
+If you wanna run the <b>classification model</b> (implemented with LSTM) just run classification.py
+
 If you wanna take a look at the code you can run the <b>framework</b> with a Jupyter Notebook
 
 +Advanced
