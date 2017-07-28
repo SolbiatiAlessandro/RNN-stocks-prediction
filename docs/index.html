@@ -5,7 +5,7 @@
 <body>
 <div style="height:20px;"></div>
 <div style="width:60%;margin:auto;">
-<h1> RNN-stocks-prediction </h1><span>this is the doc for <a href="https://github.com/SolbiatiAlessandro/RNN-stocks-prediction">RNN-stocks-prediction</a></p>
+<h1> RNN-stocks-prediction <span>[this is the doc for <a href="https://github.com/SolbiatiAlessandro/RNN-stocks-prediction">RNN-stocks-prediction</a>]</span></h1>
 <h3> Another attempt to use Deep-Learning in financial markets*</h3>
 <p><b>project mission</b>: implement some AI systems described in research papers in a full-stack application deployed to the market.</p>
   
@@ -64,6 +64,9 @@
     <li> OUTPUT - <b>label</b> for tomorrow behaviour of (closing)price: also here we have a couple of choice to make, the first choice <b>(option O1)</b> is about a binary classification in the label, i.e. a binary vector [1,0] or [0,1] to show if the price goes up or down. The second choice <b>(option O2)</b> is implementing a multi-class classification, that could be understood as a "discrete mapping" from the continuous log return interval [-INF; +INF] to a discrete interval {-5, -4, .. , 4, 5}. As before, O2 is more difficult to implement and carry out more information, I will have a try with both and see the different outcomes.</li>
   </ul>
   <p>After a few hours of testing and reading some papers about this topic I figured out that really good accuracy is obtained with the tuple I2-O1, that is multivariate input of all the OLHCV data and as output a binary classification [1,0] or [0,1] (not multi-class) of the predicted behaviour of the price. I will go for that one, as my next framework implementation.</p>
+  <p><b>- ATTENTION: IMMINENT BREAKTHROUGH -</b></p>
+  <p>So I wrote the Neural Network with I2-O1 configuration and the results were suprisingly good, on the training data of GOOGL stock price from 2000-2016 the NN got a <u>prediction accuracy of 63%</u>. What does it mean? That if you gave the last 30 days OHLCV prices from Yahoo Finance to the Neural Network it will be predict the price of tomorrow with an accuracy of 63% (right 63 times on 100). This is a great news since it mean that the NN is actually working and acquiring some prediction capabilities. Still, the validation accuracy is between 52-54%, so there is a large room for improvement. Here is the training accuracy and validation accuracy for the model.</p>
+  <div id="graphdiv6"style="width:500px; height:300px;"></div> 
 </div>
 <div style="height:20px;"></div>
   
@@ -96,7 +99,7 @@
   );
    g6 = new Dygraph(
     document.getElementById("graphdiv6"),
-    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification.csv",
+    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification_acc.csv",
     {
       rollPeriod: 1,
       showRoller: true
@@ -104,7 +107,7 @@
   );
    g7 = new Dygraph(
     document.getElementById("graphdiv7"),
-    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/regressionA.csv",
+    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification_loss.csv",
     {
       rollPeriod: 1,
       showRoller: true
