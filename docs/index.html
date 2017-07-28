@@ -69,6 +69,15 @@
   <div id="graphdiv6"style="width:500px; height:300px;"></div> 
   <p>Right now I am pretty positive, since the project is becoming meaningful. I am actually creating something that is able to predict prices consistently and <b>improves</b> during the training. This concept of 'training' the Neural Network really excites me, I mean seeing actually the NN getting better and better at predicting stock prices during the training. To highlight this concept I show you here the 'loss function', that is the difference between the predicted and actual value. As you see, during the training the loss is decreasing more and more (wow!).</p>
   <div id="graphdiv7"style="width:500px; height:300px;"></div> 
+  <p><b>PLOT TWIST: I DID NOT USE RNN</b></p>
+  <p>Yeah I didn't use a recurrent neural network model, no LSTM, no GRU, nothing. I used.. CNN! I found on this paper [Di Persio, Honchar 2017] the description of this Convolutional Neural Network model suitable for my O1-I2 model and it just worked perfectly. I will go thourgh the model implementation later, now I want to do a better training to actually see what this NN can do. So the next steps should be something like this:</p>
+  <ul>
+    <li>Prepare a <b>massive training</b>, using a full-index data like S&P500, I need to write some function to iterate over different tickers training the same model. This way I hope to get a first enhancement in the accuracy</li>
+    <li>Analyise the CNN model, try to do some fine-tuning changing hyper-parameters and other features</li>
+    <li>Implement the same structure with a RNN model, it should technically perform better</li>
+    <li>If I get a decent accuracy (60%) also on the validation sample I can start to do some algo-trading benchmarking to evaluate the next steps</li>
+  </ul>
+  <p>After this long day we got some result: EUREKA. Now will start the long journey to improve the accuracy as high as possible. I will probably spend the next hours playing around with the classification model on different financial instruments to see if I get some golden nugget (FOREX, Volatility and others)</p>
 </div>
 <div style="height:20px;"></div>
   
