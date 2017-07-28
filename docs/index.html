@@ -94,6 +94,12 @@
   </ul>
   <p>The model right now is still quite simple and there are dozens of different implementations and variations that can be tried. My view up to now is that the key point is <i>find the right balance with the kind of data to predict and the right complexity of the Neural Network</i>. Here below is a scheme about the structure of the implementation up to now.</p>
   <img src="https://github.com/SolbiatiAlessandro/RNN-stocks-prediction/blob/master/docs/img/day3b.jpg?raw=true" width="500px" />
+  <p>Ok so we have this model, to see how it actually perform with a large scale dataset <b>I tried to run it on the SP500</b>. Since I don't have any supercomputer around I just tried with my MacBook GPU on the first 15 titles of the SP500, namely ['ABT', 'ABBV', 'ACN', 'ADBE', 'AAP', 'AES', 'AET', 'AFL', 'AMG', 'A', 'GAS', 'APD', 'ARG'] -> about 40000 entries in the dataframe. I got different results from the previous GOOGL training set (4000 entries), let's have a look.</p>
+  <div id="graphdiv8" style="width:500px; height:300px;"></div>
+  <p style="font-size:12px">training dataset 15 titles from SP500, 110 epochs with a BATCH_SIZE of about 40000 entries, the final effective accuracy is about 54-55%</p>
+  <div id="graphdiv9" style="width:500px; height:300px;"></div>
+  <p style="font-size:12px">training dataset 15 titles from SP500, 110 epochs with a BATCH_SIZE of about 40000 entries, this time the loss is decreasing, not so much but is decreasing at least. So we DO NOT have overfitting </p>
+  <p>So having a look in hindsight about the performance of the NN on the GOOGL training data, the main problem is <i>overfitting</i>. In that case the loss function for the training dataset is decreasing while the loss function for validation data is increasing. This means that the NN while is learning really good the distribution of GOOGL prices but not really improving its prediction ability (about 52% for GOOGL validation data). <b>Now on the SP500 dataset we have a substantial improvement on this</b>. You can see that the loss value is actually decreasing BOTH for the training and validation: the predictivity of the NN is improving and the final result is in fact 54-55% predictivity on the actual validation set. Yes, now we are going towards underfitting and this is why we will need to take a look at our architecture and start to tune it to get better performance, but.. hey, now is really working. We are predicting on 55% accuracy new data. You can have a try to predict your own data loading my NN that you can find in .hfd5 format in the github repo.</p>.
 <div style="height:20px;"></div>
   
 <script type="text/javascript">
@@ -142,6 +148,26 @@
    g7 = new Dygraph(
     document.getElementById("graphdiv7"),
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/classification_loss.csv",
+    {
+      rollPeriod: 1,
+      showRoller: true,
+      ylabel: 'loss (%)',
+      xlabel: 'training time (epochs)'
+    }
+  );
+     g8 = new Dygraph(
+    document.getElementById("graphdiv8"),
+    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/SP500classification_acc.csv",
+    {
+      rollPeriod: 1,
+      showRoller: true,
+      ylabel: 'accuracy (%)',
+      xlabel: 'training time (epochs)'
+    }
+  );
+     g9 = new Dygraph(
+    document.getElementById("graphdiv9"),
+    "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/SP500classification_loss.csv",
     {
       rollPeriod: 1,
       showRoller: true,
