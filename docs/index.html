@@ -124,12 +124,42 @@
 <div style="width:90%;margin:auto;">
   <h2>Day 4 - Balance the time</h2>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4.jpg" width="500px" />
-  <p>This the lesson when I met <i>XK</i> at the Uni, he was the TA during our lab on CNN, and I showed him the project. He told me that I could actually end up with something useful, and gave me a huge insight: I need more data. The 57% I got yesterday is fine, but I am still 'playing' around with my laptop. He told me I should definitely try to train the Neural Network on some big GPUs to get better results. He is right, considering the great improvement I got starting from GOOGL (4000 entries) to 15 titles of the SP500 (40.000 entries), the next step will be definitely <b>train the NN on the WHOLE S&P500</b> (we are speaking about 2.000.000 entries) or turn to FOREX to get even more data. A nice target would be arrive at a 60% of accuracy on new data still with relatively small training datasets, and go over 60% with the large training datasets. So my current vision is something like this:</p>
+  <p>This is the class when I met <i>XK</i> at the Uni, he was the TA during our lab on CNN, and today I showed him the project. He told me that I could actually end up with something useful, and gave me a huge insight: I need more data. The 57% I got yesterday is fine, but I am still 'playing' around with my laptop. He told me I should definitely try to train the Neural Network on some big GPUs to get better results. He is right, considering the great improvement I got starting from GOOGL (4000 entries) to 15 titles of the SP500 (40.000 entries), the next step will be definitely <b>train the NN on the WHOLE S&P500</b> (we are speaking about 2.000.000 entries) or turn to FOREX to get even more data. A nice target would be arrive at a 60% of accuracy on new data still with relatively small training datasets, and go over 60% with the large training datasets. So my current vision is something like this:</p>
   <ul>
     <li> <b>Study more timeframes</b> to get a full understanding of my data, looking at training output for every combination of different parameters (timestep window, prediction time, input price frequency, ecc..)</li>
     <li> Give a try to the <i>way of the change</i>, I wanna try to <b>implement RNN(GRU) RNN(LSTM)</b> and if I feel brave enough try to give a simple implementation of the Wavelet transform for selecting price features</li>
     <li> <b>Build a solid framework</b> to train the Neural Network with hundreds of thousands of samples, and find a supercomputer to run it.</li>
   </ul>
+  <p>-</p>
+  <p>So the last couple of hours I wrote a <b>new script that basically iterates the main framework with different hyperparameters</b>; since I am strongly interested in looking at the 'charts' this iterative framework output all the accuracy and loss charts from EVERY model in a huge csv file, this way I should be able to see the exact correlation between hyperparameters and training process. I am going to create a folder to contain all the previous version of my code so you can follow this doc/blog, and I think I will keep the main file 'framework.py' and 'framework_iter.py' as the updated code.</p> 
+  <p>-</p>
+  <p>I started to launch my iterative framework to 'test' the hyperparameters-couple WINDOW (how many days does the NN prime ) and FORECAST ( how many days in the future predicts ). I decided to choose a dozen of initial combination to genrally see how the CNN behaves, and I am individuating a couple of major trends.</p>
+  <p><b>- ATTENTION: HARD TIMES TO COME -</b></p>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4a.jpg" width="700px" />
+  <p style="font-size:12px">Comparative table for the two hyperparameters WINDOW and FORECAST, the value reported is the prediction accuracy on the validation sample (percentage)</p>
+  <p> So this was the output of my iterative framework running on the WINDOWtoFORECAST tuple, trying different values of the WINDOW hyperparameter [5,10,20,40,80] and FORECAST hyperparameter [1,2,3,6,12,24]. The results are really clear: a change in the window size doesn't influence our accuracy, instead the higher we increase our forecast interval the better the accuracy. <i>Wait, what? This thing here is saying that the CNN is better at predicting next month prices than tomorrow prices?</i> When I saw I was like: there must be something wrong here. Fortunately I was wise enough to implement in the iterative framework that huge CSV output file with the details about the training process of all the models (every accuracy value is a different model). So I went immediately to have a look and I got what was happening there.</p>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4ab.jpg" width="700px" />
+  <p style="font-size:12px">Accuracy and loss values during the training of different model with <b>same FORECAST interval</b> and <b>different WINDOW size</b></p>
+  <p>Starting with the easy one (the most expected) the WINDOW interval doesn't have an actual influence on the performance of the CNN, the charts above are different model predicting on 2/3 FORECAST interval but varying a lot the WINDOW size [2,5,10,20], that mean changing the number of days (timesteps) the CNN can prime to make the forecast: <b>so no matter how many previous days (WINDOW) we give to the CNN, she will not improve the predictive power adding just some random noise to model.</b>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4ab.jpg" width="700px" />
+  <p style="font-size:12px">Accuracy and loss values during the training of different model with <b>same WINDOW size (80)</b> and <b>different FORECAST intervals [3, 6, 12, 24]</b></p>
+  <p>I must admit that this hit me really hard. If you ever did a bit of machine learning you can see clearly in this charts what is going on: overfitting. On 3 days forecast the results are still positive, since we see that the CNN training is effectful, but on the other timeframes the CNN is becoming worse and worse at predicting new data (I drew all the linear regression line to highlight the trends in the loss and accuracy changes). After trying a lot to understand what's going on I would say that <b>the forecasting interval maximizes the CNN performance between 3 and 5 days (of prediction), intervals bigger than 5 days the CNN just dramatically overfit and lose any prediction power</b>.
+  <br>
+  <p>-</p>
+  <p>So, couple of hours later I still have the pessimistic view on this framework I had after seeing the last charts. Why is that? If you didn't spot it, there is a <b>huge problem</b>, a black storm at the horizon. <b>We still have our good (reliable) result of 56%-57% accuracy we got yesterday [Day3], but the model itself is corrupted: the CNN show an increasing validation accuracy but in truth it's just having a huge overfit on the whole dataset.</b> You could say 'Well Alex, just don't increase the FORECAST hyperparameters and it doesn't over fit'. OK :) But the point is that our validation accuracy is not a good measure anymore of the performance of our CNN, just remember that FORECAST = 24 generates a validation accuracy of over 60%! That is obviously false, since the big overfit: just try with other validation samples and the CNN fall down to a neat 50%. (Yes I spent the last hours validating every model on different validation samples)</p>
+  <br>
+  <p>OK to sum up what we got today and what is next here is a brief list</p>
+  <ul>
+    <li><b>Our best result up to now is a 56%/57% accuracy</b> on 5 DAYS forecast on Stock Prices of S&P500. I actually ran the model on <i>other</i> stocks and it still work at a pretty high accuracy (varying from 54
+    5 to 56%)</li>
+    <li><b>Our framework is corrupted</b> as I just explained above. The reason in my opinion is data: I have been throwing this big data in the model not caring so much about the organization of the dataframe, and I end up with bad quality data. And bad quality data I mean I have a dataframe not-well constructed that tricks the Neural Network, that overfits showing high validation accuracy.</li>
+    <li>The priority now is to <b>build a new version of the dataframe that uses better data and organize them in a better way</b>. This will be I think the main topic for tomorrow. On this new framework I will build the RNN and the multi-classification model that should really boost my accuracy. I decided to call the framework I have been working on up to now <b>v.0.1-Framework</b> and the one I will start tomorrow (day 5) <b>v.0.2-Framework</b></li>
+  </ul>
+  <p>note: <i>what I learned from today: is all about data</i>, today I got the first big setback in the project and I started questioning the very nature of NN. If you take some famous example like MNIST, why do all the CNN models built on MNIST dataset work so well (99.5% accuracy)? Of course they are great model, but the real golden nugget there is <i>the dataset</i>, that was infact buily by our friend Yan. <u><i>If you want a great result, you need a great dataset. </u></i> </p>
+
+
+
+
 <script type="text/javascript">
   g3 = new Dygraph(
     document.getElementById("graphdiv3"),
@@ -206,4 +236,3 @@
   
 </script>
 </body>
-
