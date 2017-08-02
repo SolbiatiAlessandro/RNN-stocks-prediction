@@ -135,13 +135,13 @@
   <p>-</p>
   <p>I started to launch my iterative framework to 'test' the hyperparameters-couple WINDOW (how many days does the NN prime ) and FORECAST ( how many days in the future predicts ). I decided to choose a dozen of initial combination to genrally see how the CNN behaves, and I am individuating a couple of major trends.</p>
   <p><b>- ATTENTION: HARD TIMES TO COME -</b></p>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4a.jpg" width="700px" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/WtF01.png" width="700px" />
   <p style="font-size:12px">Comparative table for the two hyperparameters WINDOW and FORECAST, the value reported is the prediction accuracy on the validation sample (percentage)</p>
   <p> So this was the output of my iterative framework running on the WINDOWtoFORECAST tuple, trying different values of the WINDOW hyperparameter [5,10,20,40,80] and FORECAST hyperparameter [1,2,3,6,12,24]. The results are really clear: a change in the window size doesn't influence our accuracy, instead the higher we increase our forecast interval the better the accuracy. <i>Wait, what? This thing here is saying that the CNN is better at predicting next month prices than tomorrow prices?</i> When I saw I was like: there must be something wrong here. Fortunately I was wise enough to implement in the iterative framework that huge CSV output file with the details about the training process of all the models (every accuracy value is a different model). So I went immediately to have a look and I got what was happening there.</p>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4ab.jpg" width="700px" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/WINDOWnot-relevant.png" width="700px" />
   <p style="font-size:12px">Accuracy and loss values during the training of different model with <b>same FORECAST interval</b> and <b>different WINDOW size</b></p>
   <p>Starting with the easy one (the most expected) the WINDOW interval doesn't have an actual influence on the performance of the CNN, the charts above are different model predicting on 2/3 FORECAST interval but varying a lot the WINDOW size [2,5,10,20], that mean changing the number of days (timesteps) the CNN can prime to make the forecast: <b>so no matter how many previous days (WINDOW) we give to the CNN, she will not improve the predictive power adding just some random noise to model.</b>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day4ab.jpg" width="700px" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/FORECASToverfitting.png" width="700px" />
   <p style="font-size:12px">Accuracy and loss values during the training of different model with <b>same WINDOW size (80)</b> and <b>different FORECAST intervals [3, 6, 12, 24]</b></p>
   <p>I must admit that this hit me really hard. If you ever did a bit of machine learning you can see clearly in this charts what is going on: overfitting. On 3 days forecast the results are still positive, since we see that the CNN training is effectful, but on the other timeframes the CNN is becoming worse and worse at predicting new data (I drew all the linear regression line to highlight the trends in the loss and accuracy changes). After trying a lot to understand what's going on I would say that <b>the forecasting interval maximizes the CNN performance between 3 and 5 days (of prediction), intervals bigger than 5 days the CNN just dramatically overfit and lose any prediction power</b>.
   <br>
@@ -157,9 +157,9 @@
   </ul>
   <p>note: <i>what I learned from today: is all about data</i>, today I got the first big setback in the project and I started questioning the very nature of NN. If you take some famous example like MNIST, why do all the CNN models built on MNIST dataset work so well (99.5% accuracy)? Of course they are great model, but the real golden nugget there is <i>the dataset</i>, that was infact buily by our friend Yan. <u><i>If you want a great result, you need a great dataset. </u></i> </p>
   <h2>Day 5 - the FOREX way</h2>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day5.jpg" width="700px" />
+
   <p>It's time to build a new dataframe, and to improve the framework to manage the dataframe. I need a huge amount of high quality data, that come from the same distribution and are not so heavily influenced by market conditions. <b>The answer is FOREX, the market of exchange currencies.</b> Why is that? Big volume. The FOREX is the market with largest volume traded, and this means that there is an huge amount of trading data regarding the market transaction. I will use <a href="https://www.dukascopy.com">dukascopy</a>, where you can find for free the minute-by-minute exchange rate of the major currencies of the last 20 years. Yes, minute-by-minute, it means having <b>over 2 million entries considering a 5/10years time frame JUST for one currencies pair</b>. And not only this, what I like about minute-date on the FOREX is that the patterns in them are not so influenced by market conditions: GOOGL is traded today very differently compared with how it was traded last month, this is because of the different market condition, but EUR/USD is traded with same market conditions today afternoon compared to morning since the market condition are pretty the same, thus our NN should be better and recognizing patterns. So let's have a look at the <b>framework-v.0.2</b> I am building</p>
-  <b>
+  <br>
   <h3>Framework-v.0.2 /main new features</h3>
   <ul>
     <li><b>Dataset build and cleaning</b>: the framework download and clean the minute-by-minute forex data
@@ -167,9 +167,7 @@
     <li><b>Testing utilites</b>: since the problems I had with testing on val_accuracy I wrote a couple utilites also here to test my results better, mainly based on parametric algorithmic trading</li>
   </ul>
   <p>Here are some of the first results I got with FOREX minute data</p>
-  <div id="graphdiv10" style="width:500px; height:300px;"></div>
-  <div id="graphdiv11" style="width:500px; height:300px;"></div>
-  <p style="font-size:12px">Accuracy and loss for a CNN trained on FOREX minute data, with a small data sample of just 5000 entries and 17 epochs</p>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/5a.png" width="700px" />
 
 
 
