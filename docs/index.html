@@ -179,6 +179,32 @@
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/algo-testing.png" width="700px"  />
   <p>Here is the outcome of the trading algo, in my opinion really positive. Increasing alfa, that is increasing how selective is the algo in 'accepting' predictions from the Neural Network, we have a substancial imporvement in the performance of the algo. We have here a succesfull trading strategy, even if it's yet really basic. When alfa increases to much the performance goes to 100% (and this is great) but of course this result is not consistence since the algo is practically rejecting all the predictions from the NN and picking just 1 or 2 predictions on the full 40000 dataset.</p> 
 
+  <h2>Day 6 - going BIG</h2>
+
+  <p>Ok, I was pretty positive about last days results so I wanted to try increasing the size of the data. Not only to test my current model (binary classification CNN) but to actually analyse the difference between medium-size datasets and large-size datasets. I am using minute-data from currency exchange and here is the data scale I am working on right now.</p>
+  <ul>
+    <li><b>Medium size dataset</b>: training (+validation) on 1 month window [20.000-40.000 entries] testing on 1 week window [5000 entries]</li>
+    <li><b>Large size dataset</b>: training (+validation) on 1 year window [500.000-1.000.000 entries] testing on 1 month window [20.000-40.000]
+  </ul>
+  <p>So i tried with a large-size dataset, training from 07/2016 to 07/2017 with EUR/USD (euro-dollar) minute exchange prics (OHLCV) and testing the model from 07/2017 to 08/2017 (last month). Here is the result of my trading algorithm on 07/2017 to 08/2017 trading (the model did NOT have the last month data during the training so the test is on real new data</p>
+
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/big-model.png" width="700px" />
+
+  <p>So here we have the outcome of our alfa-parametric trading algorithm that uses the Neural Network to predict prices, at alfa varying from 0.5 to 0.7 (as I sad alfa is how selective is the algorithm is in picking predictions from the NN). Here are the characteristics we can observe working with large dataset:</p>
+  <ul>
+    <li><b>Good consistentcy  of results</b>: the result are consistent and the predictive accuracy increase linearly with the alfa parameter varying uniformly from 52% to 60%</il>
+    <li><b>Good number of results</b>: we see that the number of prediction is high even with higher alfa scenario, for instance alfa=0.55 we have a 54%-56% accuracy with 570 right predictions and 480 wrong predictions<il>
+    <li><b>Good accuracy of results</b>: the accuracy right now is varying from 52% to 65% that is already an excellent result from a trading point of view (binary options have a break even point of 52%). Keep in mind that we are still using a very basic model, that is binary classification CNN, and I am confident that this result will be improved a lot with an RNN (GRU or LSTM) multi-classification model in the next implementations of the framework</il>
+  </ul>
+  <p>Ok great, I think we are getting closer and closer to a real trading strategy, but first I want to try to implement a couple of other ideas I had with Forex data. I was thinking that what the NN is good at is getting the patterns in the price movement and becoming able to 'continue' a sequence of prices following the patterns it learned; actually this is not exactly 'predicting' or 'forecasting' the future prices. Why is it? Because the movement of prices not always follow the usual patterns (highly volatilty periods or short-term noise/oscillations). So if we want to actually 'predict' prices movement <b>we should filter the predictions of the NN only to some specific period of time</b>, when the market is not volatile or sensible to short-term oscillations for instance. Here are a couple of ideas I got on how to improve on this side. </p>
+  <br>
+  <h3>- Maybe new timeframes,</h3>
+  <p><b>Predicting on longer/different time frames</b>, so this should be effective because of the Brownian motion (noise). The prices has some noise/random/Brownian motion that can not be predicted, but eliminated this noise what emerges are the patterns. How to do it? Instead of ask the NN if the price of tomorrow will be higher/lower than today we can ask her if the price of next week will be higher/lower than today (reference to the intuition I had still at the time of predicting GOOGL)</p>
+  <br>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/volatility-filter.png" width="700px" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/volatility-filter2.png" width="700px" />
+  <h3>- And also new filters.</h3>
+  <p><b>Applying some volatility filter to the predictions</b>. Ok this is a new idea. So playing around with my charts and neural networks I saw that in periods when the market is really volatilty the prediction performance of my dear NN decline sharply. Why is that? Clearly the market is volatile is losing the regular patterns it follows usually. So what we should do is something like this: take the NN prediction and filter them picking the prediction of the low-volatility periods, if the volatilty goes up we stop listening to the NN and we just wait the market to calm down. How to do it? Well, <b>just compute some associateed volatility index with our instrument and put a basic filter to our trading algorithm based on that.</b> Sounds reasonable. What could be even more interesting would be make some machine learning inference about which kind of market situtation our NN is better at predicting and which kind of market is worse, and after that implement some ML filters on the algo. Cool. But I need to proceed one step at a time.</p>
 <script type="text/javascript">
   g3 = new Dygraph(
     document.getElementById("graphdiv3"),
