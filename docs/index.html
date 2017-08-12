@@ -215,7 +215,27 @@
   <p>Couple of hours have passed, I have a first draft of my <b>framework v-0.3.0</b>. I used some python libraries to build a basic multi-threading GUI to manage the framework (Tkinter e Threading), so that I can start and stop the my trading application, and I used some other libraries (Selenium + PhantomJS) to dynamically parse the web-app of my broker X. Recap, why do I want to parse the html every N seconds? First because I want to have a live-data feed (reading the ASK and BID value) and second because I need to automatically send my order from brokerX web-app. I know I could find maybe some better infrastructure with API and everything but this will do for the first trials. So here is a screenshot from my <b>framework-v.0.3.0</b> running</p>
 
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/livedatafeed.png" width="700px" />
+  
+  <h2>Day 8 - Binary to Ternary </h2>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/callput.png" width="700px" />
+  <p>I have been exploring many (over 13) different brokers for binary options out there. It turned out that the problem is not so simple as I thought at the start. The outcome is not binary, but is ternary. You don't have just have 'price goes up' or 'price goes down'. You need to take into account the fundamental concept of <a href="http://www.investopedia.com/terms/b/bid-askspread.asp">ask, bid and spread</a>. You win a 'call' if and only if the BID price at the prediction time is higher than the ASK price at the betting time, and viceversa for a 'put'. This is obviously killing our probability. I need to rewrite the framework in a Ternary fashion: [1,0,0] Call - [0,1,0] Put - [0,0,1] Nothing (because the price doesn't move more than the spread between ask and bid).
+
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/binaryternary.png" width="700px" />
+
+  So I rewrote the framework implementing the ASK-BID-SPREAD mechanism, the problem is that <b>this way my winning rate goes down sharply</b>. I am still using 'tick' data on FOREX (a new data every 0.1s for EUR/USD) and I am playing around with timeframes. I saw that using bigger dataset here kind of worsen my performance? Why is that? probably tick prices goes with different distributions in different weeks. In the same time I am writing slightly more complex trading algo since the ternary structure, considering the difference between the probability for the event [1,0,0] and the probabilty for the event [0,1,0]. I remain positive since my NN is still learning at a good rate, even if the accuracy power is lower. (is lower since now we have to predict 1 outcome out of 3). Right now I am getting a 45-50% percent accuacy for CALL and PUT events.
+
+ <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/ternary.png" width="700px" />
+
+  This is how the neural network works, she gives you back a vector [p1,p2,p3] where p1 is the probability for event [1,0,0], p2 [0,1,0], and p3 [0,0,1]. As I said right now the algorithms I am using to implement a trading strategy on this new outcome is different, based on the delta = abs(p1-p2) and a gamma = p3/mean(p3). Of course this is not a structured trading algo but it will do for now.
+
+  What do I do now? Well I will continue to play around with the ternary structure, I want to take smaller dataset to get the ticks from the same probability distribution, I am currently predicting on a 3mins forecast, and a 50ticks step between different time-windows. My priority now is not to get the best result in terms of performance now, but is to deploy the trading system to at least one broker platform with a demo account, after that I will start to improve accuracy. I put my deadline on next Tuesday (today is Sat) since here in Milan is holiday but the stock markets are open and I can finally stay home during open hours of the market (I am working in a hedge-fund right now).
+
+  note: I noticed I am writing the blog but I am not updating my code on the repo, currently I am working on the framework v.0.3.2, I will do something about it the next days ;)
+
+  
+  
   <script type="text/javascript">
+    
   g3 = new Dygraph(
     document.getElementById("graphdiv3"),
     "https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/csv/regressionA.csv",
