@@ -232,12 +232,12 @@
 
   note: I noticed I am writing the blog but I am not updating my code on the repo, currently I am working on the framework v.0.3.2, I will do something about it the next days ;)
 
-   <h2>TrTernary's side effects</h2>
+   <h2>Ternary's side effects</h2>
   <p>Ok ternary is not going so good. Why is that? Have a look a these charts</p>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day9-01.png" width="700px" />
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day09-02.png" width="700px" />
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day09-03.png" width="700px" />
-  <p>This is the performance of my seven different algorithms that work on the Neural Net predictions to trade the market. On the Y Axis there is the accuracy (right bets/total bets) and on the X Axis are the tuning parameters (4 algos out of 7 are parametric). So is it good? I am having a good 60-70% accuracy with algo-03 and algo-01, but the point that this is NOT good. Is not good because is quite random, is a reliable estimate: basically the algos perform good based on how much the training set and the testing set have the same trend. I know I am not using a large dataset, but even with weekly and monthly dataset using ternary classification the results are similar. So this is a recap about the classification strategy (post v.0.2) I used up to now.</p>
+  <p>This is the performance of my seven different algorithms that work on the Neural Net predictions to trade the market. On the Y Axis there is the accuracy (right bets/total bets) and on the X Axis are the tuning parameters (4 algos out of 7 are parametric). So is it good? I am having a good 60-70% accuracy with algo-03 and algo-01, but the point that this is NOT good. Is not good because is quite random, it is not a reliable estimate: basically the algos perform good based on how much the training set and the testing set have the same trend. I know I am not using a large dataset, but even with weekly and monthly dataset using ternary classification the results are similar. So this is a recap about the classification strategy (post v.0.2) I used up to now.</p>
   <ul>
     <li>I started with binary, was going pretty good. I tried both with FOREX minute data and FOREX ticks data and I have healthy and positive results</li>
     <li>Bad news, binary classification is a lie: even if it's called binary is actually a ternary process. With BID ASK and SPREAD</li>
