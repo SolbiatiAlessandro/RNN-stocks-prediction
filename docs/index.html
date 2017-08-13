@@ -232,7 +232,7 @@
 
   note: I noticed I am writing the blog but I am not updating my code on the repo, currently I am working on the framework v.0.3.2, I will do something about it the next days ;)
 
-   <h2>Ternary's side effects</h2>
+   <h2>Day 9 - Ternary's side effects</h2>
   <p>Ok ternary is not going so good. Why is that? Have a look a these charts</p>
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day9-01.png" width="700px" />
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day09-02.png" width="700px" />
@@ -254,6 +254,7 @@
   <p>These are the charts of the performance of my algorithms (I wrote nine up to now) in two different 'spread' condition (you can read it in the legend on the upper right). With spread I mean the average number of time that the prices does not vary more than the spread (difference between bid and ask) during my prediction time, in a prediction-in-the-spread scenario I will always lose, no matter I do a put or a call. So the key to edge a ternary classification model is to make prediction on longer time frames (15mins, 30mins, 45mins) so that the prices oscillations will be big in respect to the spread. In the two charts above I used the exact same model but with different FORECAST values (5 mins for 19% spread and 20 mins for 5% spread). You can see how the performance of ALL the algorithms increases substantially.</p>
   <br>
   <p>So today I wrote a cleaner and more efficient version of the framework, and tomorrow I will probably produce better testing result for my apparently high-performance algorithm, <b>we are getting closer to the deployment of the trading system!</b></p> 
+  <p>NOTE: we are at version v.0.2.3 of the framework</p>
   <script type="text/javascript">
     
   g3 = new Dygraph(
