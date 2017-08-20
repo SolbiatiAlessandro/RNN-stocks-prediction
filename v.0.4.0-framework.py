@@ -378,7 +378,10 @@ class DukascopyBinary(object):
         self.root.after(1000, self.trading)  # After 1 second, call scanning
         self.root.mainloop()
         self.root2.mainloop()
-        app = App()
+        
+        
+        
+app = App()
 
 app.mouse_config()
 
