@@ -1,3 +1,7 @@
+#
+# Hey :) I am Alex, I am happy that you are one of the many guys that are using my code to play around, if you find something cool or want to share/ask me something go for it and email me at alessandro.solbiati@post.com
+#
+
 import pandas as pd
 import numpy as np
 import random
