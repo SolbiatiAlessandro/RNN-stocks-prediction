@@ -234,7 +234,7 @@
 
    <h2>Day 9 - Ternary's side effects</h2>
   <p>Ok ternary is not going so good. Why is that? Have a look a these charts</p>
-  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day9-01.png" width="700px" />
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day9-1.png" width="700px" />
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day09-02.png" width="700px" />
   <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/day09-03.png" width="700px" />
   <p>This is the performance of my seven different algorithms that work on the Neural Net predictions to trade the market. On the Y Axis there is the accuracy (right bets/total bets) and on the X Axis are the tuning parameters (4 algos out of 7 are parametric). So is it good? I am having a good 60-70% accuracy with algo-03 and algo-01, but the point that this is NOT good. Is not good because is quite random, it is not a reliable estimate: basically the algos perform good based on how much the training set and the testing set have the same trend. I know I am not using a large dataset, but even with weekly and monthly dataset using ternary classification the results are similar. So this is a recap about the classification strategy (post v.0.2) I used up to now.</p>
@@ -255,6 +255,29 @@
   <br>
   <p>So today I wrote a cleaner and more efficient version of the framework, and tomorrow I will probably produce better testing result for my apparently high-performance algorithm, <b>we are getting closer to the deployment of the trading system!</b></p> 
   <p>NOTE: we are at version v.0.2.3 of the framework</p>
+  
+  
+  <h2>Day 14 - the first week of algo trading with my CNN (v.0.4.0 )</h2>
+  <p>I hadn't written for a while. After the deployment of the algo trading strategy and the framework was solid enough I started running it on a broker demo account. The one-billion dollar question: <b>did I make money? Yes.</b> But life is not so easy. Long story short, this thing actually implements some profitable trading strategies BUT I still need to reduce dramatically the risk and volatilty of my returns. Let me break it down for you. So here is an overview of my framework-v.0.4.0 in action.</p>
+  <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-1.png" width="700px" />
+  <p>So here is how it works, the v.0.4.0 is ternary based so we need the ASK window and the BID window open to dynamically parse data. While the python script parses the data the NN is working on a parallel thread (yep I am using multi-threading) giving us the prediction for the next FORECAST time with a prediction array [p0,p1,p2]. Every time we have a prediction the algo (I am using the famous algo-08 with alfa=0.495 that gave me excellent performances on the test dataset) runs on the prediction array, and give me a signal: PUT, CALL, NOTHING. Once I have the signal I just send some scripting orders to my broker (using Selenium and BeautifulSoup) and I open my position. You can see in the picture a PUT has just been ordered.</p>
+  <br>
+  <br>
+  <p><b>So is this thing profitable? How much? Can I earn a living out of this?<b> Yes and no. The broker is giving me a break-even of 52% and during this week I consistently mantained a winning-rate greater then 52%. But after seeing my NN trading there is a strong necessity to improve on reliablity and risk conteinance. After one week of observing long 10 hours live sessions (at my office) here are some things I noted</b>
+    <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-2.png" width="700px" />
+    <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-3.png" width="700px" />
+  <p>The Neural Network is working with some trend-inversion strategies. It seems to work in both senses (up and down) and likes to put many orders one after another. The first days it seemed that the NN was building her strategy on spotting prices not balanced compared to moving/ew averages. Not such a 'deep' strategy, and in my opionion also quite risky (never bet against a trend). Anyway, we never know what she is thinking so let her do. The real question was: is she using a strategy or just going almost random? I got the answer the second day</p>
+    <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-4.png" width="700px" />
+    <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-5.png" width="700px" />
+  <p>So here we see the case scenario: sharp 1-min upward spike (the EUR/USD is following a stable uptrend in this period). I was watching how the NN is reacting to two very similar upward spikes and we can actually assume that she is using some sort of 'high-level' trading strategy. Same base scenario, different outcome. You can see in the first one she is betting down after the spikes (and is right), and in the second one is betting up (and is also right). Luck? Random? Strategy? Aliens? Illuminati? Who knows. I just know my cash is growing.</p>
+  <br>
+  <p>Is this a 'shut up and take my money' scenario? It is NOT. As I said betting against the trend is really dangerous and it happened that she was also wrong sometimes. I need to shrink down the prediction size, and I have some great idea for the next version of the framework-v.0.5.0, <b>the GUI version.</b></p>
+  <ul>
+    <li>Is time <b>to build a GUI</b> for doing training, I need to do intensive research with different pairs, strategies, and ideas. I need to be able to implement and change testing/training style quickly and also to visualize what I am doing. Is time to build a GUI. I am learning PyQt4, that seems to me the best option.</li>
+    <li>What we are asking the NN is TOO difficult, predicting non-stop the market 12 hours a day. The idea I am following is to <b>take a particular event (for instance USA non-farm payroll)</b> and ask the NN to predict the movement of the pairs after the event.</li>
+    <li>The time has arrived <b>to take in fresh new data.</b> And I am not speaking only about prices, I am speaking about taking all the bullshit from macro-economic data to weather forecast. If I plan to start to train the NN on more specific tasks/event I need relevant data about that.</li>
+  </ul>
+  <p>I will start working now on my GUI with PyQt4, (even if its 03:00AM). Next update? Dunno yet. Ideally I will update the blog again next week after the new model will be in action. Let's see what will happen. If I disappear is because I became millionare ;)</p>
   <script type="text/javascript">
     
   g3 = new Dygraph(
