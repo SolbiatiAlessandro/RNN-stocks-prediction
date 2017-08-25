@@ -255,7 +255,7 @@
   <br>
   <p>So today I wrote a cleaner and more efficient version of the framework, and tomorrow I will probably produce better testing result for my apparently high-performance algorithm, <b>we are getting closer to the deployment of the trading system!</b></p> 
   <p>NOTE: we are at version v.0.2.3 of the framework</p>
-  
+  <br>
   
   <h2>Day 14 - the first week of algo trading with my CNN (v.0.4.0 )</h2>
   <p>I hadn't written for a while. After the deployment of the algo trading strategy and the framework was solid enough I started running it on a broker demo account. The one-billion dollar question: <b>did I make money? Yes.</b> But life is not so easy. Long story short, this thing actually implements some profitable trading strategies BUT I still need to reduce dramatically the risk and volatilty of my returns. Let me break it down for you. So here is an overview of my framework-v.0.4.0 in action.</p>
@@ -263,7 +263,7 @@
   <p>So here is how it works, the v.0.4.0 is ternary based so we need the ASK window and the BID window open to dynamically parse data. While the python script parses the data the NN is working on a parallel thread (yep I am using multi-threading) giving us the prediction for the next FORECAST time with a prediction array [p0,p1,p2]. Every time we have a prediction the algo (I am using the famous algo-08 with alfa=0.495 that gave me excellent performances on the test dataset) runs on the prediction array, and give me a signal: PUT, CALL, NOTHING. Once I have the signal I just send some scripting orders to my broker (using Selenium and BeautifulSoup) and I open my position. You can see in the picture a PUT has just been ordered.</p>
   <br>
   <br>
-  <p><b>So is this thing profitable? How much? Can I earn a living out of this?<b> Yes and no. The broker is giving me a break-even of 52% and during this week I consistently mantained a winning-rate greater then 52%. But after seeing my NN trading there is a strong necessity to improve on reliablity and risk conteinance. After one week of observing long 10 hours live sessions (at my office) here are some things I noted</b>
+  <p><b>So is this thing profitable? How much? Can I earn a living out of this?</b> Yes and no. The broker is giving me a break-even of 52% and during this week I consistently mantained a winning-rate greater then 52%. But after seeing my NN trading there is a strong necessity to improve on reliablity and risk conteinance. After one week of observing long 10 hours live sessions (at my office) here are some things I noted</b>
     <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-2.png" width="700px" />
     <img src="https://raw.githubusercontent.com/SolbiatiAlessandro/RNN-stocks-prediction/master/docs/img/v04-3.png" width="700px" />
   <p>The Neural Network is working with some trend-inversion strategies. It seems to work in both senses (up and down) and likes to put many orders one after another. The first days it seemed that the NN was building her strategy on spotting prices not balanced compared to moving/ew averages. Not such a 'deep' strategy, and in my opionion also quite risky (never bet against a trend). Anyway, we never know what she is thinking so let her do. The real question was: is she using a strategy or just going almost random? I got the answer the second day</p>
