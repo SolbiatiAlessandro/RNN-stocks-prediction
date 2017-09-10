@@ -278,7 +278,15 @@
     <li>The time has arrived <b>to take in fresh new data.</b> And I am not speaking only about prices, I am speaking about taking all the bullshit from macro-economic data to weather forecast. If I plan to start to train the NN on more specific tasks/event I need relevant data about that.</li>
   </ul>
   <p>I will start working now on my GUI with PyQt4, (even if its 03:00AM). Next update? Dunno yet. Ideally I will update the blog again next week after the new model will be in action. Let's see what will happen. If I disappear is because I became millionare ;)</p>
+  
+  <h2>Day 21 - Portabilty issues and web-app </h2>
+  <p><i>Note: I am not giving focusing 100% on the project these weeks due to a big competetitive programming competition that will be held in two month, after that I will start again hammering on this proj as I used to.</i></p>
+  <br>
+  <p>So the second week of trading ended, my portfolio is positive but I am dissatisfied with the fact that I am still running the algo on my laptop everyday in the office. I need to find a stabler solution. I changed a bit my point of view from last week, I don't wanna do a desktop-app but a web-app, I am playing around with couple of frameworks like Flask and Django and I feel kindof intrigued. But the problem of portability remains: right now I need to control mouse and keyboard to interact with my broker. Ideally this situation (kind of embarassing) will change when I will move to some better quality broker like OANDA or similar, but right now my solution is working fine so I will stick with it for a while. So the web-app is a nice option, for having a GUI for testing/development purposes of my NN, but for the trading side I still need to run my script on a machine. Since running it from my laptop all the time is not so convenient (it takes 1.5h to collect the data for the first 90min window) I need to set up some trading environment at home. I will set up a Linux virtual machine on my PC at home, so that it will run constantly even when I am at the office. This way I will be able to start doing some statistics/risk assesment of the trading strategies.</p>
+  
   <script type="text/javascript">
+    
+    
     
   g3 = new Dygraph(
     document.getElementById("graphdiv3"),
